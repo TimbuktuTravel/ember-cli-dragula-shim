@@ -1,26 +1,40 @@
 # ember-cli-dragula-shim
 
-This README outlines the details of collaborating on this Ember addon.
+This ember-cli addon simplifies integration of the dragula drag-n-drop library with ember-cli apps.
+
+## Demo site
+
+Check out examples at https://smashweaver.github.io/ember-cli-dragula-shim/
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-dragula-shim`
-* `npm install`
+```
+ember install ember-cli-dragula-shim
+```
 
-## Running
+## Usage
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+```
+import Component from '@ember/component';
+import layout from '../templates/components/simple-drag';
+import dragula from 'dragula';
+import { get, set } from '@ember/object';
 
-## Running Tests
+export default Component.extend({
+  layout,
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+  didInsertElement() {
+    let drake = dragula([this.element]);
+    set(this, 'drake', drake);
+  },
 
-## Building
+  willDestroyElement() {
+    let drake = get(this, 'drake');
+    drake.destroy();
+  }
+});
+```
 
-* `ember build`
+## API
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+See [bevacqua/dragula](https://github.com/bevacqua/dragula) for details.
