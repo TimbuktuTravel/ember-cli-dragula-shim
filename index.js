@@ -4,6 +4,7 @@
 const path = require('path');
 const funnel = require('broccoli-funnel');
 const merge = require('broccoli-merge-trees');
+const map = require('broccoli-stew').map;
 
 module.exports = {
   name: 'ember-cli-dragula-shim',
@@ -23,9 +24,17 @@ module.exports = {
   },
 
   treeForVendor(vendorTree) {
-    const trees = [];
-    const dragulaTree = funnel(path.dirname(require.resolve('dragula/dist/dragula.js')), {
-      files: ['dragula.css', 'dragula.js'],
+    let trees = [];
+
+    let dragulaJsTree = funnel(path.dirname(require.resolve('dragula/dist/dragula.js')), {
+      files: ['dragula.js'],
+      destDir: 'dragula'
+    });
+
+    dragulaJsTree = map(dragulaJsTree, content => `if (typeof FastBoot === 'undefined') { ${content} } else { define(function() { }); }`);
+
+    let dragulaCssTree = funnel(path.dirname(require.resolve('dragula/dist/dragula.js')), {
+      files: ['dragula.css'],
       destDir: 'dragula'
     });
 
@@ -33,7 +42,8 @@ module.exports = {
       trees.push(vendorTree);
     }
 
-    trees.push(dragulaTree);
+    trees.push(dragulaJsTree);
+    trees.push(dragulaCssTree);
 
     return merge(trees);
   }
