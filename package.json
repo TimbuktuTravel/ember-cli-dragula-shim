@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smashweaver/ember-cli-dragula-shim.git"
+    "url": "git+https://github.com/timbuktutravel/ember-cli-dragula-shim.git"
   },
   "scripts": {
     "build": "ember build",
@@ -25,7 +25,7 @@
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-stew": "^1.5.0",
-    "dragula": "smashweaver/dragula.git#mousemove",
+    "dragula": "timbuktutravel/dragula.git#master",
     "ember-cli-babel": "^6.6.0"
   },
   "devDependencies": {
